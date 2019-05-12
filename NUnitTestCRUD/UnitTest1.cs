@@ -77,28 +77,32 @@ namespace Tests
         private const string APPLICATION_URL = "http://107.22.154.93/crud-php-simple/";
         private const string userName = "Ivan Ivanov";
         private const string userAge = "35";
-        private const string userEmail = "ivan@gmail.com";
-        private string deleteUserLink;
+        private const string userEmail = "ivan@gmail.com";       
         private IWebElement deleteUserLink1;
 
         [SetUp]
         public void Setup()
         {
-            //IWebDriver driver = new ChromeDriver(@"C:\Users\³����\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\");//C:\Users\³����\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\UnitTest1.cs
             //driver = new FirefoxDriver();
             var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            ///home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2
-            driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver");
+            ///home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2           
+
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("headless");
+            // Must maximize Chrome by `start-maximized`
+            options.AddArguments("start-maximized");
+
+            driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+            //driver = new ChromeDriver(universalDriverPath, options);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
 
         [Test]
         public void Test1()
-        {
-            //var windowsChrome = @"C:\Users\³����\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\";
+        {            
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);
-            driver.Manage().Window.Size = new System.Drawing.Size(BROWSER_WIDTH, BROWSER_HEIGHT);
+            //driver.Manage().Window.Size = new System.Drawing.Size(BROWSER_WIDTH, BROWSER_HEIGHT);
             driver.Navigate().GoToUrl("http://107.22.154.93/crud-php-simple/");
 
             Thread.Sleep(1000);
