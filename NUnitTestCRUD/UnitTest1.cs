@@ -88,7 +88,7 @@ namespace Tests
             //driver = new FirefoxDriver();
             var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             ///home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2
-            driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver");
+            driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver");
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
 
