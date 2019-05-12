@@ -89,10 +89,16 @@ namespace Tests
 
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("headless");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("disable-infobars");
+            options.AddArgument("--disable-extensions");
+            options.AddArguments("--no-sandbox");
+            options.AddArguments("--disable-dev-shm-usage");
             // Must maximize Chrome by `start-maximized`
             options.AddArguments("start-maximized");
 
-            driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+             driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+            //driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
             //driver = new ChromeDriver(universalDriverPath, options);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
