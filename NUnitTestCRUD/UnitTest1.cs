@@ -84,17 +84,18 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            //IWebDriver driver = new ChromeDriver(@"C:\Users\Віктор\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\");//C:\Users\Віктор\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\UnitTest1.cs
+            //IWebDriver driver = new ChromeDriver(@"C:\Users\ВіпїЅпїЅпїЅпїЅ\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\");//C:\Users\ВіпїЅпїЅпїЅпїЅ\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\UnitTest1.cs
             //driver = new FirefoxDriver();
             var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            driver = new ChromeDriver(universalDriverPath);
+            ///home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2
+            driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2");
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
 
         [Test]
         public void Test1()
         {
-            //var windowsChrome = @"C:\Users\Віктор\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\";
+            //var windowsChrome = @"C:\Users\ВіпїЅпїЅпїЅпїЅ\Documents\Visual Studio 2017\Projects\NUnitTestCRUD\NUnitTestCRUD\bin\Debug\netcoreapp2.2\";
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);
             driver.Manage().Window.Size = new System.Drawing.Size(BROWSER_WIDTH, BROWSER_HEIGHT);
