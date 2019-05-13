@@ -97,8 +97,8 @@ namespace Tests
             // Must maximize Chrome by `start-maximized`
             options.AddArguments("start-maximized");
 
-             driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
-            //driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+            // driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+           driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
             //driver = new ChromeDriver(universalDriverPath, options);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
