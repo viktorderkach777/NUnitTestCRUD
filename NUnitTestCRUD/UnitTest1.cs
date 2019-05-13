@@ -162,9 +162,7 @@ namespace Tests
                     break;
                 }               
             }
-
-
-            ///html/body/table/tbody/tr[2]/td[4]/a[2]
+           
             Assert.AreEqual(result, true);            
         }
 
