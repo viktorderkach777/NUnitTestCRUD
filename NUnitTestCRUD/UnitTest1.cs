@@ -20,7 +20,7 @@ namespace Tests
         private string userEmailInputField;
         private string deleteLinkInputField;
         private string editLinkInputField;
-        private TablePageObject tablePageObject; //= new TablePageObject(driver);
+        private TablePageObject tablePageObject; 
 
 
         private IWebDriver driver;
