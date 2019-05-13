@@ -165,21 +165,22 @@ namespace Tests
 
 
             ///html/body/table/tbody/tr[2]/td[4]/a[2]
-            Assert.AreEqual(true,true);            
+            Assert.AreEqual(result, true);            
         }
 
 
         [TearDown]
         public void TearDown()
         {
-            var deleteLink = deleteUserLink1.FindElement(By.XPath("//a[2]"));
-            deleteLink.Click();
+           Thread.Sleep(1000);
+           var deleteLink = deleteUserLink1.FindElement(By.XPath("//a[2]"));
+          deleteLink.Click();
 
 
             //Thread.Sleep(1000);
 
             //wait.Until(ExpectedConditions.AlertIsPresent());
-            driver.SwitchTo().Alert().Accept();
+            //driver.SwitchTo().Alert().Accept();
             //var alert = driver.SwitchTo().Alert();            
             //alert.Accept();
 
@@ -206,8 +207,8 @@ namespace Tests
 
 
 
-            driver.Close();
-            driver.Quit();
+           // driver.Close();
+           driver.Quit();
         }
     }
 }
