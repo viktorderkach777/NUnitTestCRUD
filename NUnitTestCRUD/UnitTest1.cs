@@ -80,8 +80,7 @@ namespace Tests
         public void Setup()
         {
             //driver = new FirefoxDriver();
-            var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            ///home/viktor/NUnitTestCRUD/NUnitTestCRUD/bin/Debug/netcoreapp2.2           
+            var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);                     
 
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("headless");
@@ -102,8 +101,7 @@ namespace Tests
         public void Test1()
         {            
            
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);
-            //driver.Manage().Window.Size = new System.Drawing.Size(BROWSER_WIDTH, BROWSER_HEIGHT);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);           
             driver.Navigate().GoToUrl("http://54.145.204.186/crud-php-simple/");
 
             //Thread.Sleep(1000);
@@ -129,8 +127,7 @@ namespace Tests
             //Thread.Sleep(1000);
             var resultRows = driver.FindElements(By.TagName("tr"));
 
-            var result = false;
-           
+            var result = false;           
 
             foreach (var row in resultRows)
             {
