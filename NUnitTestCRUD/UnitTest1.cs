@@ -175,10 +175,10 @@ namespace Tests
           deleteLink.Click();
 
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             //wait.Until(ExpectedConditions.AlertIsPresent());
-            driver.SwitchTo().Alert().Accept();
+            //driver.SwitchTo().Alert().Accept();
             //var alert = driver.SwitchTo().Alert();            
             //alert.Accept();
 
