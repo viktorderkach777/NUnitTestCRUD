@@ -13,56 +13,79 @@ using System.Linq;
 
 namespace Tests
 {
-    public class UserPageObject
-    {
-        private string userNameInputFieldXpath;
-        private string userAgeInputField;
-        private string userEmailInputField;
-        private string deleteLinkInputField;
-        private string editLinkInputField;
-        private TablePageObject tablePageObject; 
-
-
-        private IWebDriver driver;
-
-        public UserPageObject(IWebDriver driver)
-        {
-            this.driver = driver;
-            //tablePageObject = driver.FindElements(By.TagName("tr"));
-        }
-
-        //public IWebElement UserNameInputField
-        //{
-        //    get
-        //    {
-        //        return driver.FindElement(By.CssSelector(MY_TASKS_CSS));
-        //    }
-        //}
-
-    }
-
 
     public class TablePageObject
     {
-        private IWebDriver driver;
-        
+        private const string TASK_LINK_TAGNAME = "tr";
+        private IWebDriver driver;        
 
         public TablePageObject(IWebDriver driver)
         {
-            this.driver = driver;
-            var tablePageObject = driver.FindElements(By.TagName("tr"));
+            this.driver = driver;           
+        }       
+
+        public List<UserPageObject> UserList
+        {
+            get
+            {
+                var result = new List<UserPageObject>();
+                var tasks = driver.FindElements(By.TagName(TASK_LINK_TAGNAME));
+
+                foreach (var task in tasks)
+                {
+                    result.Add(new UserPageObject(task));
+                }
+
+                return result;
+            }
+        }
+    }
+
+
+    public class UserPageObject
+    {
+        IWebElement parent;       
+
+        private const string USER_NAME_XPATH = "//td[1]";
+        private const string USER_AGE_XPATH = "//td[2]";
+        private const string USER_EMAIL_XPATH = "//td[3]";
+        private const string USER_EDIT_LINK_XPATH = "//td[4]/a[1]";
+        private const string USER_DELETE_LINK_XPATH = "//td[4]/a[2]";
+
+        public UserPageObject(IWebElement parent)
+        {
+            this.parent = parent;
         }
 
+        public IWebElement UserName
+        {
+            get => parent.FindElement(By.XPath(USER_NAME_XPATH));
+        }
 
-        //public List<UserPageObject> UserList
-        //{
-        //    get
-        //    {
-        //        //return driver.FindElement(By.CssSelector(DEPARTMENTS_CSS));
-        //    }
-        //}
+        public IWebElement UserAge
+        {
+            get => parent.FindElement(By.XPath(USER_AGE_XPATH));
+        }
 
+        public IWebElement UserEmail
+        {
+            get => parent.FindElement(By.XPath(USER_EMAIL_XPATH));
+        }
+
+        public IWebElement UserEditLink
+        {
+            get => parent.FindElement(By.XPath(USER_EDIT_LINK_XPATH));
+        }
+
+        public IWebElement UserDeleteLink
+        {
+            get => parent.FindElement(By.XPath(USER_DELETE_LINK_XPATH));
+        }
     }
+
+
+
+
 
     public class Tests
     {        
@@ -75,11 +98,12 @@ namespace Tests
         private const string userAge = "35";
         private const string userEmail = "ivan@gmail.com";       
         private IWebElement deleteUserLink1;
+        private UserPageObject user;
+        
 
         [SetUp]
         public void Setup()
-        {
-            //driver = new FirefoxDriver();
+        {            
             var universalDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);                     
 
             ChromeOptions options = new ChromeOptions();
@@ -93,7 +117,7 @@ namespace Tests
 
              //driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
            driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
-            //driver = new ChromeDriver(universalDriverPath);
+           //driver = new ChromeDriver(universalDriverPath);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
 
@@ -103,8 +127,7 @@ namespace Tests
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);           
             driver.Navigate().GoToUrl("http://54.145.204.186/crud-php-simple/");
-
-            //Thread.Sleep(1000);
+           
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
             ls.Click();            
@@ -124,24 +147,36 @@ namespace Tests
             var viewresultLink = driver.FindElement(By.XPath("/html/body/font/a"));
             viewresultLink.Click();
             
-            //Thread.Sleep(1000);
+            
             var resultRows = driver.FindElements(By.TagName("tr"));
 
             var result = false;           
 
             foreach (var row in resultRows)
             {
-                var items = row.FindElements(By.TagName("td"));
+                var items = row.FindElements(By.TagName("td"));                
+
+                UserPageObject user = new UserPageObject(row);
+               
+                string s2 = user.UserName.Text;
+
                 var resultName = items[0].Text;
                 var resultAge = items[1].Text;
                 var resultEmail = items[2].Text;
 
-                if (items[0].Text == userName && items[1].Text==userAge && items[2].Text == userEmail)
+                if (items[0].Text == userName && items[1].Text == userAge && items[2].Text == userEmail)
                 {
                     result = true;
-                    deleteUserLink1 = items[3];                   
+                    deleteUserLink1 = items[3];
                     break;
-                }               
+                }
+
+                //if (user.UserName.Text == userName && user.UserAge.Text == userAge && user.UserEmail.Text == userEmail)
+                //{
+                //    result = true;
+                //    deleteUserLink1 = items[3];
+                //    break;
+                //}
             }
            
             Assert.AreEqual(result, true);            
@@ -150,8 +185,7 @@ namespace Tests
 
         [TearDown]
         public void TearDown()
-        {
-           //Thread.Sleep(1000);
+        {           
            var deleteLink = deleteUserLink1.FindElement(By.XPath("//a[2]"));
           deleteLink.Click();
             
