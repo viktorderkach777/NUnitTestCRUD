@@ -106,7 +106,7 @@ namespace Tests
             //driver.Manage().Window.Size = new System.Drawing.Size(BROWSER_WIDTH, BROWSER_HEIGHT);
             driver.Navigate().GoToUrl("http://54.145.204.186/crud-php-simple/");
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
             ls.Click();            
@@ -126,7 +126,7 @@ namespace Tests
             var viewresultLink = driver.FindElement(By.XPath("/html/body/font/a"));
             viewresultLink.Click();
             
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             var resultRows = driver.FindElements(By.TagName("tr"));
 
             var result = false;
@@ -154,7 +154,7 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-           Thread.Sleep(1000);
+           //Thread.Sleep(1000);
            var deleteLink = deleteUserLink1.FindElement(By.XPath("//a[2]"));
           deleteLink.Click();
             
