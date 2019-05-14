@@ -65,11 +65,7 @@ namespace Tests
     }
 
     public class Tests
-    {
-        //private const string REMOTE_BROWSER_NAME = "firefox";
-        //private const string REMOTE_BROWSER_VERSION = "63.0";
-        private const int BROWSER_WIDTH = 1920;
-        private const int BROWSER_HEIGHT = 1080;
+    {        
         private IWebDriver driver = null;
         private WebDriverWait wait = null;
         private const int IMPLICIT_WAIT_SECONDS = 15;
@@ -93,8 +89,7 @@ namespace Tests
             options.AddArgument("disable-infobars");
             options.AddArgument("--disable-extensions");
             options.AddArguments("--no-sandbox");
-            options.AddArguments("--disable-dev-shm-usage");
-            // Must maximize Chrome by `start-maximized`
+            options.AddArguments("--disable-dev-shm-usage");            
             options.AddArguments("start-maximized");
 
              //driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
@@ -114,38 +109,27 @@ namespace Tests
             Thread.Sleep(1000);
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
-            ls.Click();
-
-            //Thread.Sleep(1000);
+            ls.Click();            
 
             var name = driver.FindElement(By.XPath("/html/body/form/table/tbody/tr[1]/td[2]/input"));
-            name.SendKeys(userName);
-
-            //Thread.Sleep(1000);
+            name.SendKeys(userName);            
 
             var age = driver.FindElement(By.XPath("/html/body/form/table/tbody/tr[2]/td[2]/input"));
-            age.SendKeys(userAge);
-
-           // Thread.Sleep(1000);
+            age.SendKeys(userAge);          
 
             var email = driver.FindElement(By.XPath("/html/body/form/table/tbody/tr[3]/td[2]/input"));
-            email.SendKeys(userEmail);
-
-           // Thread.Sleep(1000);
+            email.SendKeys(userEmail);           
 
             var addButton = driver.FindElement(By.XPath("/html/body/form/table/tbody/tr[4]/td[2]/input"));
             addButton.Click();
 
             var viewresultLink = driver.FindElement(By.XPath("/html/body/font/a"));
             viewresultLink.Click();
-
-            // document.querySelector("body > a")/html/body/form/table/tbody/tr[4]/td[2]/input
-            /// /html/body/font/a
+            
             Thread.Sleep(1000);
             var resultRows = driver.FindElements(By.TagName("tr"));
 
             var result = false;
-
            
 
             foreach (var row in resultRows)
@@ -173,39 +157,7 @@ namespace Tests
            Thread.Sleep(1000);
            var deleteLink = deleteUserLink1.FindElement(By.XPath("//a[2]"));
           deleteLink.Click();
-
-
-            //Thread.Sleep(1000);
-
-            //wait.Until(ExpectedConditions.AlertIsPresent());
-            //driver.SwitchTo().Alert().Accept();
-            //var alert = driver.SwitchTo().Alert();            
-            //alert.Accept();
-
-            //bool presentFlag = false;
-
-            //try
-            //{
-
-            //    // Check the presence of alert
-            //    var alert = driver.SwitchTo().Alert();
-            //    // Alert present; set the flag
-            //    //presentFlag = true;
-            //    // if present consume the alert
-            //    alert.Accept();
-
-            //}
-            //catch (NoAlertPresentException ex)
-            //{
-            //    // Alert not present
-            //    //ex.printStackTrace();
-            //}
-
-            //return presentFlag;
-
-
-
-           // driver.Close();
+            
            driver.Quit();
         }
     }
