@@ -93,7 +93,7 @@ namespace Tests
         private WebDriverWait wait = null;
         private const int IMPLICIT_WAIT_SECONDS = 15;
         private const int EXPLICIT_WAIT_SECONDS = 10;
-        private const string APPLICATION_URL = "http://54.145.204.186/crud-php-simple/";
+        private const string APPLICATION_URL = "http://35.196.233.219/crud-php-simple/";
         private const string userName = "Ivan Ivanov";
         private const string userAge = "35";
         private const string userEmail = "ivan@gmail.com";       
@@ -116,7 +116,7 @@ namespace Tests
             options.AddArguments("start-maximized");
 
              //driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
-           driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+           driver = new ChromeDriver("/home/viktorderkach7777/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
            //driver = new ChromeDriver(universalDriverPath);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
@@ -126,8 +126,8 @@ namespace Tests
         {            
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);           
-            driver.Navigate().GoToUrl("http://54.145.204.186/crud-php-simple/");
-           
+            driver.Navigate().GoToUrl("http://35.196.233.219/crud-php-simple/");
+          
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
             ls.Click();            
