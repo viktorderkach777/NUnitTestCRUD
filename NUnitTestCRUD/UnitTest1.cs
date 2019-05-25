@@ -10,9 +10,52 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 
+using OpenQA.Selenium.Remote;
+using System.Drawing;
+
+
 
 namespace Tests
 {
+
+    static public class SelenoidDrivers
+    {
+        public const string CHROME = "chrome";
+        public const string FIREFOX = "firefox";
+        public const string CHROME_V1 = "73.0";
+        public const string CHROME_V2 = "74.0";
+        public const string FIREFOX_V1 = "66.0";
+        public const string FIREFOX_V2 = "67.0";
+        private const bool ENABLE_VNC = true;
+        private const int BROWSER_WIDTH = 1920;
+        private const int BROWSER_HEIGHT = 1080;
+        private const string URI = "http://172.17.0.1:4444/wd/hub";
+
+
+
+        static public IWebDriver CreateDriver(string browser, string version)
+        {
+            ChromeOptions options = new ChromeOptions();
+            //options.AddArgument("headless");
+            //options.AddArgument("disable-gpu");
+
+
+            options.AddArgument("test-type=browser");
+            options.AddAdditionalCapability("enableVNC", true, true);          
+            //options.AddAdditionalCapability(CapabilityType.Platform, "LINUX", true);
+            options.AddAdditionalCapability(CapabilityType.BrowserName, CHROME, true);
+            options.AddAdditionalCapability(CapabilityType.BrowserVersion, CHROME_V1, true);
+            var driver = new RemoteWebDriver(new Uri(URI), options.ToCapabilities());
+
+            //var capabilities = new DesiredCapabilities(browser, version, new Platform(PlatformType.Any));
+            //capabilities.SetCapability("enableVNC", ENABLE_VNC);
+            //var driver = new RemoteWebDriver(new Uri(URI), capabilities);
+
+
+            driver.Manage().Window.Size = new Size(BROWSER_WIDTH, BROWSER_HEIGHT);
+            return driver;
+        }
+    }
 
     public class TablePageObject
     {
@@ -93,7 +136,7 @@ namespace Tests
         private WebDriverWait wait = null;
         private const int IMPLICIT_WAIT_SECONDS = 15;
         private const int EXPLICIT_WAIT_SECONDS = 10;
-        private const string APPLICATION_URL = "http://54.145.204.186/crud-php-simple/";
+        private const string APPLICATION_URL = "http://35.196.233.219/crud-php-simple/";
         private const string userName = "Ivan Ivanov";
         private const string userAge = "35";
         private const string userEmail = "ivan@gmail.com";       
@@ -115,9 +158,10 @@ namespace Tests
             options.AddArguments("--disable-dev-shm-usage");            
             options.AddArguments("start-maximized");
 
-             //driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
-           driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
-           //driver = new ChromeDriver(universalDriverPath);
+            //driver = new ChromeDriver("/home/viktor/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+            //driver = new ChromeDriver("/home/ubuntu/NUnitTestCRUD/NUnitTestCRUD/Driver", options);
+           
+            driver = new ChromeDriver(universalDriverPath);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(EXPLICIT_WAIT_SECONDS));
         }
 
@@ -126,7 +170,7 @@ namespace Tests
         {            
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);           
-            driver.Navigate().GoToUrl("http://54.145.204.186/crud-php-simple/");
+            driver.Navigate().GoToUrl("http://35.196.233.219/crud-php-simple/");
            
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
@@ -146,17 +190,73 @@ namespace Tests
 
             var viewresultLink = driver.FindElement(By.XPath("/html/body/font/a"));
             viewresultLink.Click();
-            
-            
+
+
+             const string USER_NAME_XPATH = "//td[1]";
+        const string USER_AGE_XPATH = "//td[2]";
+         const string USER_EMAIL_XPATH = "//td[3]";
+         const string USER_EDIT_LINK_XPATH = "//td[4]/a[1]";
+         const string USER_DELETE_LINK_XPATH = "//td[4]/a[2]";
+
+            ///html/body/table/tbody/tr[2]/td[4]/a[1]
+            ////html/body/table/tbody/tr[3]/td[4]/a[1]
+            ////html/body/table/tbody/tr[4]/td[4]/a[1]
+
+
             var resultRows = driver.FindElements(By.TagName("tr"));
 
-            var result = false;           
+            List<IWebElement> tabl = new List<IWebElement>();
+
+            foreach (var item in resultRows)
+            {
+                tabl.Add(item);
+            }
+
+
+
+            List<IWebElement> cell = new List<IWebElement>();
+
+           var cells = tabl[0].FindElements(By.TagName("td"));
+
+            foreach (var item in cells)
+            {
+                cell.Add(item);
+            }
+
+
+
+
+            var result = false;
+
+            var tab = driver.FindElement(By.XPath("/html/body/table/tbody"));
+            var rows = tab.FindElements(By.TagName("tr"));
+
+            foreach (var row in rows)
+            {
+                var parent = row;
+
+                
+
+                var n = parent.FindElement(By.XPath(USER_NAME_XPATH)).Text;
+                var a = parent.FindElement(By.XPath(USER_AGE_XPATH)).Text;
+                var e = parent.FindElement(By.XPath(USER_EMAIL_XPATH)).Text;
+                //var ed = parent.FindElement(By.XPath(USER_EDIT_LINK_XPATH)).Text;
+                //var de = parent.FindElement(By.XPath(USER_DELETE_LINK_XPATH)).Text;
+            }
+
+
+            
+
 
             foreach (var row in resultRows)
             {
-                var items = row.FindElements(By.TagName("td"));                
+                var items = row.FindElements(By.TagName("td"));            
 
-                UserPageObject user = new UserPageObject(row);
+               
+
+
+
+                user = new UserPageObject(row);
                
                 string s2 = user.UserName.Text;
 
@@ -168,15 +268,15 @@ namespace Tests
                 {
                     result = true;
                     deleteUserLink1 = items[3];
-                    break;
+                    //break;
                 }
 
-                //if (user.UserName.Text == userName && user.UserAge.Text == userAge && user.UserEmail.Text == userEmail)
-                //{
-                //    result = true;
-                //    deleteUserLink1 = items[3];
-                //    break;
-                //}
+                if (user.UserName.Text == userName && user.UserAge.Text == userAge && user.UserEmail.Text == userEmail)
+                {
+                    result = true;
+                    deleteUserLink1 = items[3];
+                    //break;
+                }
             }
            
             Assert.AreEqual(result, true);            
