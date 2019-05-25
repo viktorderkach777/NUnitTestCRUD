@@ -43,8 +43,8 @@ namespace Tests
             options.AddArgument("test-type=browser");
             options.AddAdditionalCapability("enableVNC", true, true);          
             //options.AddAdditionalCapability(CapabilityType.Platform, "LINUX", true);
-            options.AddAdditionalCapability(CapabilityType.BrowserName, CHROME, true);
-            options.AddAdditionalCapability(CapabilityType.BrowserVersion, CHROME_V1, true);
+            options.AddAdditionalCapability(CapabilityType.BrowserName, browser, true);
+            options.AddAdditionalCapability(CapabilityType.BrowserVersion, version, true);
             var driver = new RemoteWebDriver(new Uri(URI), options.ToCapabilities());
 
             //var capabilities = new DesiredCapabilities(browser, version, new Platform(PlatformType.Any));
