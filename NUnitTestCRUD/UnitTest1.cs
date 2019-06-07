@@ -126,8 +126,7 @@ namespace Tests
         {            
            
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(IMPLICIT_WAIT_SECONDS);           
-            driver.Navigate().GoToUrl("http://35.196.233.219/crud-php-simple/");
-          
+            driver.Navigate().GoToUrl("http://35.196.233.219/crud-php-simple/");          
 
             var ls = driver.FindElement(By.XPath("/html/body/a"));
             ls.Click();            
